@@ -1,2 +1,26 @@
-# helpdesk-academico
-Criar um sistema de Helpdesk simples, humano e eficiente que permita pequenas equipes organizarem, acompanharem e resolverem solicitações de suporte, sem transformar clientes em apenas números de ticket, garantindo rastreabilidade, métricas e aprendizado contínuo.
+# Sistema de Helpdesk
+
+Sistema de Helpdesk acadêmico desenvolvido por estudantes de Análise e Desenvolvimento de Sistemas (ADS).
+
+## Objetivo
+Criar uma aplicação web para gerenciamento de chamados de suporte, aplicando conceitos de frontend, backend, banco de dados e integração com módulo em C para geração de relatórios.
+
+## Equipe
+- Frontend: Bryan e Khemraj Junior
+- Backend: Wesley
+- Documentação e Organização: Khemraj Junior
+
+## Tecnologias
+- HTML5, CSS3, JavaScript
+- PHP
+- MySQL
+
+
+## Funcionalidades
+- CRUD de usuários
+- CRUD de chamados
+- Autenticação básica
+- Status de chamados (aberto, em andamento, fechado)
+- Relatórios estatísticos
+
+## Estrutura do Projeto
