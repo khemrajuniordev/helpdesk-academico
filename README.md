@@ -24,3 +24,36 @@ Criar uma aplicação web para gerenciamento de chamados de suporte, aplicando c
 - Relatórios estatísticos
 
 ## Estrutura do Projeto
+
+helpdesk-system/
+│
+├── README.md
+├── docs/
+│   ├── requisitos.md
+│   ├── regras-de-negocio.md
+│   └── backlog.md
+│
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── chamados.html
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── main.js
+│
+├── backend/
+│   ├── config/
+│   │   └── db.php
+│   ├── controllers/
+│   ├── models/
+│   └── routes/
+│
+├── database/
+│   └── schema.sql
+│
+├── c-reports/
+│   ├── relatorio.c
+│   └── README.md
+│
+└── .gitignore
