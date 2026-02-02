@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
-  <title>Login - Helpdesk</title>
+  <meta name="viewport" content="width=device-width, 
+    initial-scale=1.0">
   <link rel="stylesheet" href="/frontend/css/login.css">
+  <script src="./js/login.js"></script>
+
+  <title>Login - Helpdesk</title>
+
+
 </head>
+
 <body>
 
   <div class="login-container">
-    <form id="loginForm" class="login-card">
+    <form id="loginForm" class="login-card" onsubmit="logar(event)">
       <h2>Bem-vindo 👋</h2>
       <p class="subtitle">Acesse o sistema de chamados</p>
 
       <input type="email" id="email" placeholder="E-mail" required>
-      <input type="password" id="senha" placeholder="Senha" required>
+      <input type="password" id="password" placeholder="Senha" required>
 
       <button type="submit">Entrar</button>
 
@@ -24,9 +32,9 @@
         <a href="/frontend/cadastro.html">Cadastre-se</a>
       </p>
 
-
     </form>
   </div>
 
 </body>
+
 </html>
