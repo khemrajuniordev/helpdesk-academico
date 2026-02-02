@@ -55,10 +55,24 @@ Este sistema resolve:
 - JavaScript  
 
 ### Backend
-- PHP  
+- Python/ Django
 
 ### Banco de Dados
-- MySQL  
+O banco de dados do sistema HelpDesk foi modelado utilizando **PostgreSQL**.
+
+##Estrutura inicial
+O modelo contempla as entidades principais do sistema:
+- Usuários
+- Chamados
+- Status dos chamados
+
+Foram definidas:
+- Chaves primárias (ID's)
+- Chaves estrangeiras (usuario_id, status_id, chamado_id) para relacionamento entre tabelas
+- Regras básicas de integridade referencial
+
+##Observações
+Esta é a modelagem inicial (MVP) do banco de dados e poderá evoluir(sofrer alterações) conforme novas funcionalidades forem adicionadas ao sistema.
 
 ### Processamento Auxiliar
 - Linguagem C (relatórios estatísticos)
