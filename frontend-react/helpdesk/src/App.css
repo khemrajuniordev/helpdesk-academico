@@ -1,0 +1,37 @@
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc; /* Cor de fundo leve para o dashboard */
+}
+
+.main-content {
+  flex-grow: 1; /* Faz o conteúdo ocupar o resto da largura */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.content-header {
+  padding: 20px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-container {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Apenas para visualização */
+.card-mock {
+  background: white;
+  height: 200px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}

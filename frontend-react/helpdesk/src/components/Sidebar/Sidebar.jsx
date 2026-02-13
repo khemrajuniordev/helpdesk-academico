@@ -1,31 +1,37 @@
 import "./Sidebar.css";
 
-function Sidebar() {
+export default function Sidebar() {
   return (
+
     <aside className="sidebar">
-      
-      {/* Logo / nome do sistema */}
-      <div className="sidebar-logo">
-        <h1>HelpDesk</h1>
+
+      {/* Logo */}
+      <div className="logo">
+        HelpDesk
       </div>
 
-      {/* Menu de navegação */}
-      <nav className="sidebar-menu">
-        <ul>
-          <li className="active">Dashboard</li>
-          <li>Chamados</li>
-          <li>Relatórios</li>
-        </ul>
+      {/* Menu */}
+      <nav className="menu">
+
+        <button className="menu-item active">
+          Dashboard
+        </button>
+
+        <button className="menu-item">
+          Chamados
+        </button>
+
+        <button className="menu-item">
+          Relatórios
+        </button>
+
       </nav>
 
-      {/* Rodapé / usuário */}
+      {/* Rodapé */}
       <div className="sidebar-footer">
-        <span>khemrajunior</span>
-        <button>Sair</button>
+        Sair
       </div>
 
     </aside>
   );
 }
-
-export default Sidebar;

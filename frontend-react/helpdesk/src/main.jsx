@@ -1,20 +1,18 @@
-// Importa o React, que é a biblioteca principal
-import React from 'react'
+// Importa React
+import React from "react";
 
-// Importa o ReactDOM, responsável por renderizar na tela
-import ReactDOM from 'react-dom/client'
+// Importa ReactDOM (responsável por renderizar no navegador)
+import ReactDOM from "react-dom/client";
 
-// Importa o componente App (nosso app inteiro)
-import App from './App'
+// Importa o componente principal
+import App from "./App.jsx";
 
 // Importa o CSS global
-import './styles/global.css'
+import "./styles/global.css";
 
-// Cria a raiz da aplicação e liga ao index.html
-ReactDOM.createRoot(document.getElementById('root')).render(
-  // StrictMode ajuda a encontrar erros durante o desenvolvimento
+// Cria a raiz da aplicação
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* Renderiza o App, como ligar a TV na tomada */}
     <App />
   </React.StrictMode>
-)
+);

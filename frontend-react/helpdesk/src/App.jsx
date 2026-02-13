@@ -1,9 +1,8 @@
-import Dashboard from "./pages/Dashboard/Dashboard";
+// Importa a página Dashboard
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 
 function App() {
-  return (
-    <Dashboard />
-  );
+  return <Dashboard />;
 }
 
 export default App;
