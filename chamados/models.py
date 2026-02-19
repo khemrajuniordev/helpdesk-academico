@@ -12,7 +12,8 @@ class Status(models.Model):
         return self.nome
     
     
-class Chamado(models.Model):    
+class Chamado(models.Model):  
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chamados')  
     titulo = models.CharField(max_length=100)
     descricao = models.TextField()
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='chamados')

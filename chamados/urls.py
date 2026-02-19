@@ -7,6 +7,6 @@ router = DefaultRouter()
 router.register(r'chamados', ChamadoViewSet, basename='chamado')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls)), 
 ]
 
