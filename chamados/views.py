@@ -7,9 +7,9 @@ from rest_framework import status as http_status
 from .models import Status, HistoricoStatus
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
+
 class ChamadoViewSet(ModelViewSet):
     serializer_class = ChamadoSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -26,6 +26,9 @@ class ChamadoViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['atualizar_status']:
+            return [IsAdminUser()]
+        
+        if self.request.method == 'DELETE':
             return [IsAdminUser()]
         
         return [IsAuthenticated()]
