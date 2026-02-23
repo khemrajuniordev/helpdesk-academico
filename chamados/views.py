@@ -52,7 +52,6 @@ class ChamadoViewSet(ModelViewSet):
 
         if chamado.status.nome != "ATIVO":
             return Response({'error': 'Somente chamados com status "ATIVO" podem ser atualizados.'}, status=http_status.HTTP_400_BAD_REQUEST)
-            print("ta passando")
         
         chamado.status = status_novo
         chamado.save()
