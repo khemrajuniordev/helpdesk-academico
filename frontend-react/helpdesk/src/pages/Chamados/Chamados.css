@@ -1,0 +1,245 @@
+.chamados-page {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Toolbar */
+.chamados-toolbar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    pointer-events: none;
+}
+
+.search-input {
+    padding-left: 42px !important;
+}
+
+/* Tabela */
+.chamados-table-container {
+    padding: 0;
+    overflow: visible;
+}
+
+.chamados-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.chamados-table thead {
+    background-color: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.chamados-table th {
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chamados-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: middle;
+}
+
+.chamados-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.chamados-table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+.chamados-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Chamado cell */
+.chamado-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.chamado-cell-titulo {
+    font-weight: 500;
+    color: var(--gray-800);
+    font-size: 14px;
+}
+
+.chamado-cell-desc {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 2px;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Prioridade */
+.prioridade-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.prioridade-alta {
+    background-color: var(--priority-alta-bg);
+    color: var(--priority-alta);
+}
+
+.prioridade-media {
+    background-color: var(--priority-media-bg);
+    color: var(--priority-media);
+}
+
+.prioridade-baixa {
+    background-color: var(--priority-baixa-bg);
+    color: var(--priority-baixa);
+}
+
+/* Usuário cell */
+.usuario-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.usuario-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.usuario-cell span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+/* Ações */
+.action-menu-container {
+    position: relative;
+    z-index: 10;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+}
+
+/* Dropdown */
+.action-dropdown {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    margin-bottom: 4px;
+    background: #ffffff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    min-width: 200px;
+    padding: 8px;
+    z-index: 999;
+}
+
+.dropdown-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px 8px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    text-align: left;
+}
+
+.dropdown-item:hover:not(:disabled) {
+    background-color: var(--gray-50);
+}
+
+.dropdown-item:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dropdown-item-active {
+    background-color: var(--primary-50);
+    color: var(--primary-700);
+}
+
+.dropdown-icon-green {
+    color: var(--success);
+}
+
+.dropdown-icon-yellow {
+    color: var(--warning);
+}
+
+.dropdown-icon-red {
+    color: var(--danger);
+}
+
+/* Empty State */
+.empty-state {
+    padding: 48px;
+    text-align: center;
+    color: var(--gray-400);
+    font-size: 14px;
+}
