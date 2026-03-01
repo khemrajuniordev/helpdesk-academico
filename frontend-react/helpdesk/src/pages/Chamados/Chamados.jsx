@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Plus, MoreVertical, Clock, Loader, XCircle, CircleDot } from 'lucide-react';
+import { Search, Plus, MoreVertical, Clock, Loader, XCircle, CircleDot, Trash2 } from 'lucide-react';
 import StatusBadge from '../../components/StatusBadge/StatusBadge';
 import NovoChamadoModal from '../../components/NovoChamadoModal/NovoChamadoModal';
-import { getChamados, atualizarStatus, getStatusList } from '../../services/api';
+import { getChamados, atualizarStatus, getStatusList, excluirChamado } from '../../services/api';
+import { usuarioLogado } from '../../data/mockData';
 import './Chamados.css';
 
 function Chamados() {
@@ -58,6 +59,22 @@ function Chamados() {
 
         // Atualiza no "backend" (mock)
         await atualizarStatus(chamadoId, novoStatusId);
+    }
+
+    async function handleExcluir(chamadoId) {
+        if (!window.confirm('Tem certeza que deseja excluir este chamado?')) return;
+
+        // Remove from the UI immediately
+        setChamados(prev => prev.filter(c => c.id !== chamadoId));
+        setMenuAberto(null);
+
+        try {
+            await excluirChamado(chamadoId);
+        } catch (error) {
+            console.error('Erro ao excluir:', error);
+            // Revert state if necessary in an actual app
+            getChamados().then(setChamados);
+        }
     }
 
     const statusOptions = getStatusList();
@@ -147,20 +164,45 @@ function Chamados() {
                                         </button>
                                         {menuAberto === chamado.id && (
                                             <div className="action-dropdown animate-fade-in">
-                                                <span className="dropdown-label">Alterar Status:</span>
-                                                {statusOptions.map(s => (
-                                                    <button
-                                                        key={s.id}
-                                                        className={`dropdown-item ${chamado.status.id === s.id ? 'dropdown-item-active' : ''}`}
-                                                        onClick={() => handleMudarStatus(chamado.id, s.id)}
-                                                        disabled={chamado.status.id === s.id}
-                                                    >
-                                                        {s.nome === 'Aberto' && <CircleDot size={14} className="dropdown-icon-green" />}
-                                                        {s.nome === 'Em andamento' && <Loader size={14} className="dropdown-icon-yellow" />}
-                                                        {s.nome === 'Fechado' && <XCircle size={14} className="dropdown-icon-red" />}
-                                                        {s.nome}
-                                                    </button>
-                                                ))}
+                                                <span className="dropdown-label">ALTERAR STATUS:</span>
+
+                                                {chamado.status.nome === 'Aberto' && (
+                                                    <>
+                                                        <button className="dropdown-item" onClick={() => handleMudarStatus(chamado.id, 2)}>
+                                                            <Loader size={14} className="dropdown-icon-yellow" /> Em andamento
+                                                        </button>
+                                                        <button className="dropdown-item" onClick={() => handleMudarStatus(chamado.id, 3)}>
+                                                            <XCircle size={14} className="dropdown-icon-red" /> Fechado
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {chamado.status.nome === 'Em andamento' && (
+                                                    <>
+                                                        <button className="dropdown-item" onClick={() => handleMudarStatus(chamado.id, 1)}>
+                                                            <CircleDot size={14} className="dropdown-icon-green" /> Voltar para Aberto
+                                                        </button>
+                                                        <button className="dropdown-item" onClick={() => handleMudarStatus(chamado.id, 3)}>
+                                                            <XCircle size={14} className="dropdown-icon-red" /> Fechado
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {chamado.status.nome === 'Fechado' && (
+                                                    <>
+                                                        <button className="dropdown-item" onClick={() => handleMudarStatus(chamado.id, 1)}>
+                                                            <CircleDot size={14} className="dropdown-icon-green" /> Reabrir Chamado
+                                                        </button>
+                                                        {usuarioLogado.role === 'administrador' && (
+                                                            <>
+                                                                <div className="dropdown-divider"></div>
+                                                                <button className="dropdown-item dropdown-item-danger" onClick={() => handleExcluir(chamado.id)}>
+                                                                    <Trash2 size={14} /> Excluir Chamado
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                    </>
+                                                )}
                                             </div>
                                         )}
                                     </div>

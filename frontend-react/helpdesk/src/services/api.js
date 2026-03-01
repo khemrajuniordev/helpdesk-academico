@@ -75,6 +75,15 @@ export async function atualizarStatus(chamadoId, novoStatusId) {
     return chamado;
 }
 
+export async function excluirChamado(chamadoId) {
+    await delay();
+    const index = chamados.findIndex(c => c.id === chamadoId);
+    if (index !== -1) {
+        chamados.splice(index, 1);
+    }
+    return { success: true };
+}
+
 // ---- Dashboard ----
 export async function getEstatisticas() {
     await delay();
