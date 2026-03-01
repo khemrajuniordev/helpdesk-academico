@@ -7,15 +7,32 @@ import NovoChamadoModal from '../../components/NovoChamadoModal/NovoChamadoModal
 import { getEstatisticas, getChamados, getDemandasPorCategoria } from '../../services/api';
 import './Dashboard.css';
 
+/**
+ * PÁGINA: Dashboard (Painel de Visão Geral)
+ * 
+ * OBJETIVO: Página principal pós-login. Mostra um resumo "direto ao ponto" (KPIs) 
+ * do volume e status de atendimento do Helpdesk.
+ */
 function Dashboard() {
+  // ------------------------------------------------------------------------
+  // ESTADOS (Hooks)
+  // ------------------------------------------------------------------------
   const [stats, setStats] = useState({ total: 0, abertos: 0, emAndamento: 0, fechados: 0 });
   const [chamados, setChamados] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Hook do react-router-dom para navegação programática (mudar de página via código)
   const navigate = useNavigate();
 
+  // ==========================================
+  // CARREGAMENTO INICIAL DE DADOS
+  // ==========================================
   useEffect(() => {
     async function loadData() {
+      // Promise.all executa as três requisições SIMULTANEAMENTE.
+      // É muito mais rápido do que usar `await` três vezes separadas, 
+      // pois não espera uma requisição acabar para começar a outra.
       const [statsData, chamadosData, categoriasData] = await Promise.all([
         getEstatisticas(),
         getChamados(),
@@ -26,8 +43,10 @@ function Dashboard() {
       setCategorias(categoriasData);
     }
     loadData();
-  }, []);
+  }, []); // Array vazio = roda 1x quando a página "monta" na tela
 
+  // Usado para calcular a porcentagem de preenchimento da barra no gráfico de Categorias.
+  // Pega o maior número de quantidade, garante que seja pelo menos 1 para evitar divisão por zero.
   const maxCategoria = Math.max(...categorias.map(c => c.quantidade), 1);
 
   return (
