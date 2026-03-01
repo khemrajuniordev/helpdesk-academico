@@ -6,15 +6,34 @@ import { getChamados, atualizarStatus, getStatusList, excluirChamado } from '../
 import { usuarioLogado } from '../../data/mockData';
 import './Chamados.css';
 
+/**
+ * PÁGINA: Gerenciamento de Chamados (/chamados)
+ * 
+ * OBJETIVO: Exibir a lista de tickets do sistema, permitindo busca, filtro por status,
+ * criação de novos tickets e atualização de status/exclusão em tempo real.
+ */
 function Chamados() {
+    // ------------------------------------------------------------------------
+    // ESTADOS (Hooks)
+    // ------------------------------------------------------------------------
+    // 'chamados' guarda a lista de objetos vinda da API
     const [chamados, setChamados] = useState([]);
+    // 'busca' é controlado pelo input de pesquisa (texto livre)
     const [busca, setBusca] = useState('');
+    // 'filtroStatus' controla a aba de categorias de status (Aberto, Em andamento, etc)
     const [filtroStatus, setFiltroStatus] = useState('Todos os Status');
+    // 'modalOpen' controla a visibilidade do componente <NovoChamadoModal />
     const [modalOpen, setModalOpen] = useState(false);
+    // 'menuAberto' guarda o ID do chamado que tem o dropdown de ações aberto
     const [menuAberto, setMenuAberto] = useState(null);
+
+    // useRef é usado aqui para detectar "cliques fora" do dropdown e fechá-lo
     const menuRef = useRef(null);
 
-    // Fecha o menu ao clicar fora
+    // ------------------------------------------------------------------------
+    // EFEITOS DE CICLO DE VIDA
+    // ------------------------------------------------------------------------
+    // Módulo 1: Fecha o menu de dropdown caso o usuário clique em qualquer lugar fora dele
     useEffect(() => {
         function handleClickFora(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -25,11 +44,15 @@ function Chamados() {
         return () => document.removeEventListener('mousedown', handleClickFora);
     }, []);
 
+    // Módulo 2: Busca os chamados assim que a tela abre (o Array vazio [] garante que rode só 1x)
     useEffect(() => {
         getChamados().then(setChamados);
     }, []);
 
-    // Filtros
+    // ------------------------------------------------------------------------
+    // LÓGICA DE DADOS ESTACIONÁRIA
+    // ------------------------------------------------------------------------
+    // Aplicação dos dois filtros simultaneamente: Busca em texto + Dropdown de Status
     const chamadosFiltrados = chamados.filter(c => {
         const matchBusca =
             c.titulo.toLowerCase().includes(busca.toLowerCase()) ||
@@ -39,17 +62,24 @@ function Chamados() {
         return matchBusca && matchStatus;
     });
 
+    // Converte os textos (Alta, Média, Baixa) nas classes de CSS correspondentes
     function getPrioridadeClass(prioridade) {
         const map = { 'Alta': 'alta', 'Média': 'media', 'Baixa': 'baixa' };
         return map[prioridade] || 'media';
     }
 
+    // ------------------------------------------------------------------------
+    // AÇÕES DE MUTABILIDADE (CRUD)
+    // ------------------------------------------------------------------------
+
+    // Atualiza o Status de um Chamado
     async function handleMudarStatus(chamadoId, novoStatusId) {
         const statusList = getStatusList();
         const novoStatus = statusList.find(s => s.id === novoStatusId);
         if (!novoStatus) return;
 
-        // Atualiza localmente primeiro (UI responsiva)
+        // LÓGICA "Optimistic Update" (Atualização Otimista):
+        // Primeiro, alteramos a interface gráfica instantaneamente para parecer super rápida ao usuário.
         setChamados(prev => prev.map(c =>
             c.id === chamadoId
                 ? { ...c, status: novoStatus, data_atualizacao: new Date().toISOString() }
@@ -57,26 +87,32 @@ function Chamados() {
         ));
         setMenuAberto(null);
 
-        // Atualiza no "backend" (mock)
+        // Depois, enviamos via rede pro backend atualizar o banco real de forma silenciosa.
         await atualizarStatus(chamadoId, novoStatusId);
     }
 
+    // Exclui um chamado
     async function handleExcluir(chamadoId) {
+        // Confirmação antes de prosseguir com a exclusão
         if (!window.confirm('Tem certeza que deseja excluir este chamado?')) return;
 
-        // Remove from the UI immediately
+        // LÓGICA "Optimistic Update" (Atualização Otimista):
+        // Remove da UI imediatamente para uma experiência de usuário mais fluida.
         setChamados(prev => prev.filter(c => c.id !== chamadoId));
-        setMenuAberto(null);
+        setMenuAberto(null); // Fecha o menu de ações após a exclusão
 
         try {
+            // Requisição para a API mock (futuro DELETE /api/chamados/X)
             await excluirChamado(chamadoId);
         } catch (error) {
             console.error('Erro ao excluir:', error);
-            // Revert state if necessary in an actual app
+            // Em caso de erro na API, reverte a alteração otimista buscando os dados limpos novamente
+            // Isso garante que a UI reflita o estado real do backend.
             getChamados().then(setChamados);
         }
     }
 
+    // Obtém a lista de opções de status para uso em filtros ou dropdowns
     const statusOptions = getStatusList();
 
     return (

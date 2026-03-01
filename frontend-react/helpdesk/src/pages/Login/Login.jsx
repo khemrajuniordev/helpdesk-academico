@@ -4,31 +4,51 @@ import { login } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+/**
+ * PÁGINA: Login (/login)
+ * 
+ * OBJETIVO: Autenticar o usuário antes de acessar o sistema.
+ * Demonstra controle de formulário básico no React com tratamento de erros.
+ */
 function Login() {
+    // ------------------------------------------------------------------------
+    // ESTADOS (Hooks) do Login
+    // ------------------------------------------------------------------------
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    // Controle do botão de submit (evita múltiplos cliques enquanto processa)
     const [loading, setLoading] = useState(false);
+    // Guarda mensagens de erro para exibir na tela ("Senha incorreta", etc)
     const [erro, setErro] = useState('');
+
+    // Hook de navegação para redirecionar o usuário após o sucesso
     const navigate = useNavigate();
 
+    // Função executada ao submeter o formulário
     async function handleSubmit(e) {
+        // Previne o reload nativo do navegador
         e.preventDefault();
+
+        // Validação inicial simples no frontend
         if (!email.trim() || !senha.trim()) {
             setErro('Preencha todos os campos');
             return;
         }
 
         setLoading(true);
-        setErro('');
+        setErro(''); // Limpa erros anteriores antes de tentar de novo
 
         try {
+            // Chamada à API mockada (POST /api/login)
             const result = await login(email, senha);
             if (result.success) {
+                // Redireciona para o Dashboard (rota '/') em caso de sucesso
                 navigate('/');
             }
         } catch {
             setErro('Erro ao conectar. Tente novamente.');
         } finally {
+            // Libera o botão independente do resultado
             setLoading(false);
         }
     }

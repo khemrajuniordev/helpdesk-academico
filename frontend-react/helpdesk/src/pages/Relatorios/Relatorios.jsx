@@ -4,11 +4,21 @@ import NovoChamadoModal from '../../components/NovoChamadoModal/NovoChamadoModal
 import { getVolumePorDia, getMetricas } from '../../services/api';
 import './Relatorios.css';
 
+/**
+ * PÁGINA: Relatórios Estatísticos (/relatorios)
+ * 
+ * OBJETIVO: Exibir gráficos e métricas numéricas mais avançadas sobre o desempenho 
+ * do atendimento (SLA, volumetria diária).
+ */
 function Relatorios() {
+    // ------------------------------------------------------------------------
+    // ESTADOS (Hooks)
+    // ------------------------------------------------------------------------
     const [volume, setVolume] = useState([]);
     const [metricas, setMetricas] = useState({ percentualNoPrazo: 0, tempoMedioResposta: '', tempoMedioResolucao: '' });
     const [modalOpen, setModalOpen] = useState(false);
 
+    // Busca dados simultaneamente ao carregar a página
     useEffect(() => {
         async function loadData() {
             const [volumeData, metricasData] = await Promise.all([
@@ -21,11 +31,19 @@ function Relatorios() {
         loadData();
     }, []);
 
+    // ------------------------------------------------------------------------
+    // CÁLCULOS PARA OS GRÁFICOS
+    // ------------------------------------------------------------------------
+
+    // Gráfico de Barras (Volume): Encontra o dia de maior movimento para definir a altura 100% da barra
     const maxVolume = Math.max(...volume.map(v => v.quantidade), 1);
 
-    // Circunferência do donut chart
+    // Gráfico de Rosca (SLA): Matemática pura de SVG para desenhar o progresso circular animado
+    // radius = Raio do círculo
     const radius = 40;
+    // circumference = Tamanho total do contorno (2 * PI * Raio)
     const circumference = 2 * Math.PI * radius;
+    // offset = Quanto da linha do círculo deve ficar vazia baseada na porcentagem
     const offset = circumference - (metricas.percentualNoPrazo / 100) * circumference;
 
     return (

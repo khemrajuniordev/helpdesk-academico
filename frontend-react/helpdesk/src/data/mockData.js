@@ -1,10 +1,16 @@
 /**
  * Dados mockados para o Helpdesk Acadêmico
- * Estrutura espelha os models Django (Chamado, Status, User)
- * para facilitar integração futura com a API REST.
+ * 
+ * OBJETIVO: Este arquivo atua como um "banco de dados falso" temporário no desenvolvimento (Front-End First).
+ * LÓGICA: A estrutura dos objetos aqui espelha intencionalmente a arquitetura real dos `models` do Django.
+ * Isso garante que, quando o momento de conectar a API real chegar, o frontend já estará esperando o formato exato 
+ * das respostas JSON (facilitando muito a integração).
  */
 
-// Usuários (espelha django.contrib.auth.models.User)
+// ----------------------------------------------------------------------------
+// 1. Usuários (Espelha o modelo padrão do Django: django.contrib.auth.models.User)
+// ----------------------------------------------------------------------------
+// A propriedade 'role' define as permissões da interface (ex: apenas admin pode excluir).
 export const usuarios = [
   { id: 1, nome: 'Maria Silva', email: 'maria@empresa.com', role: 'cliente', avatar: 'M' },
   { id: 2, nome: 'João Souza', email: 'joao@empresa.com', role: 'cliente', avatar: 'J' },
@@ -13,20 +19,29 @@ export const usuarios = [
   { id: 5, nome: 'khemrajunior', email: 'khemraj@empresa.com', role: 'administrador', avatar: 'K' },
 ];
 
-// Status possíveis (espelha chamados.models.Status)
+// ----------------------------------------------------------------------------
+// 2. Status Possíveis (Espelha o modelo chamados.models.Status no backend)
+// ----------------------------------------------------------------------------
+// LÓGICA: Cada chamado está atrelado a um ID de status. Isso foi separado em objetos 
+// pois no futuro o Django retornará chaves estrangeiras.
 export const statusList = [
   { id: 1, nome: 'Aberto' },
   { id: 2, nome: 'Em andamento' },
   { id: 3, nome: 'Fechado' },
 ];
 
-// Categorias
+// ----------------------------------------------------------------------------
+// 3. Tipos Auxiliares (Categorias e Prioridades)
+// ----------------------------------------------------------------------------
 export const categorias = ['Software', 'Hardware', 'Setup', 'Rede'];
-
-// Prioridades
 export const prioridades = ['Alta', 'Média', 'Baixa'];
 
-// Chamados (espelha chamados.models.Chamado)
+// ----------------------------------------------------------------------------
+// 4. Chamados Base do Sistema (Espelha o modelo chamados.models.Chamado)
+// ----------------------------------------------------------------------------
+// LÓGICA: Tabela central. Note que 'status' e 'criado_por' contêm objetos completos.
+// No Django REST Framework (DRF), usaríamos serializers aninhados (nested serializers)
+// para entregar esses dados populados em uma única requisição na rota /api/chamados.
 export const chamados = [
   {
     id: 1,
@@ -43,7 +58,7 @@ export const chamados = [
     id: 2,
     titulo: 'Troca de toner - Impressora RH',
     descricao: 'A impressora do RH está com a impressão...',
-    status: statusList[1],
+    status: statusList[1], // Em andamento
     prioridade: 'Média',
     categoria: 'Hardware',
     criado_por: usuarios[1],
@@ -54,7 +69,7 @@ export const chamados = [
     id: 3,
     titulo: 'Configuração de novo notebook',
     descricao: 'Instalação de softwares básicos para o novo...',
-    status: statusList[2],
+    status: statusList[2], // Fechado
     prioridade: 'Baixa',
     categoria: 'Setup',
     criado_por: usuarios[2],
@@ -74,10 +89,15 @@ export const chamados = [
   },
 ];
 
-// Usuário logado (admin)
+// Simulando o contexto de autenticação global. Define quem está vendo a tela.
 export const usuarioLogado = usuarios[4];
 
-// Estatísticas
+// ----------------------------------------------------------------------------
+// 5. Agregações para Páginas (Simulando views anotadas/agrupadas do Django)
+// ----------------------------------------------------------------------------
+
+// A página de Dashboard precisa de totais gerais. 
+// LÓGICA: Filtramos a cópia local. Num backend real, faríamos um `Chamado.objects.filter().count()`.
 export const estatisticas = {
   total: chamados.length,
   abertos: chamados.filter(c => c.status.nome === 'Aberto').length,
@@ -85,13 +105,13 @@ export const estatisticas = {
   fechados: chamados.filter(c => c.status.nome === 'Fechado').length,
 };
 
-// Demandas por categoria (para o gráfico do Dashboard)
+// Dados pro gráfico de barras de categoria no Dashboard.
 export const demandasPorCategoria = categorias.map(cat => ({
   categoria: cat,
   quantidade: chamados.filter(c => c.categoria === cat).length,
 }));
 
-// Relatórios — Volume últimos 7 dias
+// Relatórios fixos pro gráfico temporal (volume gerado nos últimos dias)
 export const volumePorDia = [
   { dia: 'D1', quantidade: 3 },
   { dia: 'D2', quantidade: 5 },
@@ -102,7 +122,7 @@ export const volumePorDia = [
   { dia: 'D7', quantidade: 3 },
 ];
 
-// Relatórios — SLA & Resolução
+// Relatórios — Métricas baseadas em SLA (SLA indica o acordo de nível de serviço / prazo).
 export const metricas = {
   percentualNoPrazo: 80,
   tempoMedioResposta: '14 min',

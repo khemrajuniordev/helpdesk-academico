@@ -236,6 +236,21 @@
     color: var(--danger);
 }
 
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--gray-200);
+    margin: 6px 0;
+}
+
+.dropdown-item-danger {
+    color: var(--danger);
+}
+
+.dropdown-item-danger:hover:not(:disabled) {
+    background-color: #fee2e2;
+    /* Red 100 */
+}
+
 /* Empty State */
 .empty-state {
     padding: 48px;
