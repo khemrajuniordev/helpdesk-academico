@@ -7,8 +7,8 @@ import ReactDOM from 'react-dom/client'
 // Importa o componente App (nosso app inteiro)
 import App from './App'
 
-// Importa o CSS global
-import './styles/global.css'
+// importa o CSS global (estilos que valem para toda a aplicação)
+import "./index.css";
 
 // Cria a raiz da aplicação e liga ao index.html
 ReactDOM.createRoot(document.getElementById('root')).render(
