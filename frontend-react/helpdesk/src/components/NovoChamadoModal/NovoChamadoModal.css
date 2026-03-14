@@ -1,0 +1,15 @@
+.novo-chamado-textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: var(--font-family);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-row .select-field {
+    width: 100%;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "helpdesk-academico",
+  "version": "1.0.0",
+  "description": "Sistema de Helpdesk desenvolvido como **projeto acadêmico e de portfólio**, com o objetivo de simular um ambiente real de suporte técnico utilizado por empresas de médio porte.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khemrajuniordev/helpdesk-academico.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khemrajuniordev/helpdesk-academico/issues"
+  },
+  "homepage": "https://github.com/khemrajuniordev/helpdesk-academico#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
