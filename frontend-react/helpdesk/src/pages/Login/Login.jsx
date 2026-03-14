@@ -104,7 +104,9 @@ function Login() {
                     </button>
                 </form>
 
+                <p className="login-footer">Sistema de HelpDesk</p>
                 <p className="login-footer">Projeto Acadêmico - Full Stack & Análise de Dados</p>
+                <p className="login-footer">2026</p>
             </div>
         </div>
     );
